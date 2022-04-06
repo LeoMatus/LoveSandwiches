@@ -1,7 +1,4 @@
-
-"""
-
-"""
+import pprint
 import gspread
 from google.oauth2.service_account import Credentials
 
@@ -82,6 +79,18 @@ def update_worksheet(data, worksheet):
     worksheet_to_update.append_row(data)
     print(f"{worksheet} worksheet succesfully updated\n")
 
+def get_last_five_entries_sales():
+    """
+    Collects data from worksheet, collects the last five entries for each sandwitch and returns the data as a list of lists
+    """
+    sales = SHEET.worksheet("sales")
+    
+    columns = []
+    for ind in range(1,7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])
+    return columns
+
 def main():
     """
     Run all program functions
@@ -93,6 +102,8 @@ def main():
     update_worksheet(new_surplus_data, "surplus")
 
 print("Welcome to love sandwitches data Automation!\n")
-main()
+#main()
+
+sales_columns = get_last_five_entries_sales()
 
     
